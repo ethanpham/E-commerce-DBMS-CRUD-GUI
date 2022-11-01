@@ -7,7 +7,8 @@ from tkinter import *
 import customtkinter
 import menu
 import userMenu.userList as userList, userMenu.creditInformation as creditInformation
-import sellerMenu.sellerList as sellerList, sellerMenu.personalAccount as personalAccount, sellerMenu.businessAccount as businessAccount, sellerMenu.brandAccount as brandAccount
+import sellerMenu.sellerList as sellerList
+import sellerMenu.personalAccount as personalAccount, sellerMenu.businessAccount as businessAccount, sellerMenu.brandAccount as brandAccount
 import sellerMenu.productList as productList, sellerMenu.couponList as couponList, sellerMenu.couponForProduct as couponForProduct
 import buyerMenu.buyerList as buyerList, buyerMenu.buyerFavoriteStore as buyerFavoriteStore, buyerMenu.couponOwnByBuyer as couponOwnByBuyer
 import orderMenu.orderList as orderList, orderMenu.productBoughtInOrder as productBoughtInOrder, orderMenu.couponAppliedInOrder as couponAppliedInOrder
