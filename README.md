@@ -11,10 +11,6 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 
 Clone the project
 
-```bash
-  git clone https://github.com/ethanpham/E-commerce-Database-Management-System-CRUD
-```
-
 Install PyMySQL
 
 ```bash
