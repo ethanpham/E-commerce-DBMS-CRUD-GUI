@@ -19,6 +19,7 @@ class Menu(customtkinter.CTkFrame):
                                                         "by choosing the table you want from the menu",
                                                    text_font=('Segoe Ui Bold', 16),
                                                    text_color="#1F6AA5",
+                                                   width=950,
                                                    height=250,
                                                    corner_radius=28,
                                                    fg_color=("#E5E5E5")
