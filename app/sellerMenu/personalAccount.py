@@ -115,11 +115,11 @@ class PersonalAccount(customtkinter.CTkFrame):
         self.tree.column("#0", width=0, stretch=NO)
         self.tree.column(self.ATTRIBUTE1, anchor=W, width=80)
         self.tree.column(self.ATTRIBUTE2, anchor=W, width=200)
-        self.tree.column(self.ATTRIBUTE3, anchor=W, width=560)
+        self.tree.column(self.ATTRIBUTE3, anchor=W, width=200)
         self.tree.column(self.ATTRIBUTE4, anchor=W, width=120)
         self.tree.column(self.ATTRIBUTE5, anchor=W, width=150)
         self.tree.column(self.ATTRIBUTE6, anchor=W, width=170)
-        self.tree.column(self.ATTRIBUTE7, anchor=W, width=250)
+        self.tree.column(self.ATTRIBUTE7, anchor=W, width=180)
 
         self.tree.heading(self.ATTRIBUTE1, text = self.ATTRIBUTE1, anchor=W)
         self.tree.heading(self.ATTRIBUTE2, text = self.ATTRIBUTE2, anchor=W)

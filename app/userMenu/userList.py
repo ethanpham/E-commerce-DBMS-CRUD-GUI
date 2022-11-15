@@ -112,12 +112,12 @@ class UserList(customtkinter.CTkFrame):
         # 1330
         self.tree.column("#0", width=0, stretch=NO)
         self.tree.column(self.ATTRIBUTE1, anchor=W, width=80)
-        self.tree.column(self.ATTRIBUTE2, anchor=W, width=250)
-        self.tree.column(self.ATTRIBUTE3, anchor=W, width=50)
+        self.tree.column(self.ATTRIBUTE2, anchor=W, width=220)
+        self.tree.column(self.ATTRIBUTE3, anchor=W, width=90)
         self.tree.column(self.ATTRIBUTE4, anchor=W, width=190)
         self.tree.column(self.ATTRIBUTE5, anchor=W, width=120)
         self.tree.column(self.ATTRIBUTE6, anchor=W, width=170)
-        self.tree.column(self.ATTRIBUTE7, anchor=W, width=470)
+        self.tree.column(self.ATTRIBUTE7, anchor=W, width=390)
 
         self.tree.heading(self.ATTRIBUTE1, text = self.ATTRIBUTE1, anchor=W)
         self.tree.heading(self.ATTRIBUTE2, text = self.ATTRIBUTE2, anchor=W)

@@ -18,8 +18,8 @@ import shipperMenu.vehicleAssignedForShipper as vehicleAssignedForShipper, shipp
 class App(customtkinter.CTk):
     
     APP_NAME = "E-commerce Database Management System CRUD"
-    WIDTH = 1200
-    HEIGHT = 760
+    WIDTH = 1400
+    HEIGHT = 800
     
     def __init__(self):
         super().__init__()
