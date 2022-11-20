@@ -1,7 +1,7 @@
 import tkinter as tk
 import customtkinter
 
-class Menu(customtkinter.CTkFrame):
+class Landing(customtkinter.CTkFrame):
     
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)

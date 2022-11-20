@@ -85,18 +85,18 @@ class ProductList(customtkinter.CTkFrame):
         self.deleteButton = customtkinter.CTkButton(self, text = "Delete", text_font=('Segoe Ui', 11), command = self.delete)
         self.searchButton = customtkinter.CTkButton(self, text = "Search", text_font=('Segoe Ui', 11), command = self.search)
         self.selectButton = customtkinter.CTkButton(self, text = "Select", text_font=('Segoe Ui', 11), command = self.select)
-        self.backToMenuButton = customtkinter.CTkButton(self, 
-                                                        text = "Back To Menu", 
+        self.backToLandingButton = customtkinter.CTkButton(self, 
+                                                        text = "Back To Landing", 
                                                         text_font=('Segoe Ui', 11),
                                                         fg_color="#1A5C41",
-                                                        command=lambda: controller.showFrame("Menu"))
+                                                        command=lambda: controller.showFrame("Landing"))
 
         self.addButton.grid(row=3, column=3, columnspan=1)
         self.updateButton.grid(row=4, column=3, columnspan=1)
         self.deleteButton.grid(row=5, column=3, columnspan=1)
         self.searchButton.grid(row=6, column=3, columnspan=1)
         self.selectButton.grid(row=7, column=3, columnspan=1)
-        self.backToMenuButton.grid(row=8, column=3, columnspan=1)
+        self.backToLandingButton.grid(row=8, column=3, columnspan=1)
 
         self.headingStyle = ttk.Style()
         self.headingStyle.configure("Treeview.Heading", font=('Segoe Ui Semibold', 11), rowheight=30)
