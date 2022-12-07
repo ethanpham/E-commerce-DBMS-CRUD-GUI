@@ -7,11 +7,11 @@ import customtkinter
 
 class Route(customtkinter.CTkFrame):
     TABLE = "ROUTE"
-    NUMBER_OF_ATTRIBUTE = 3
+    NUMBER_OF_ATTRIBUTE = 4
     ATTRIBUTE1 = "ShipperID"
     ATTRIBUTE2 = "OrderID"
     ATTRIBUTE3 = "Route"
-    ATTRIBUTE4 = ""
+    ATTRIBUTE4 = "RangeInKM"
     ATTRIBUTE5 = ""
     ATTRIBUTE6 = ""
     ATTRIBUTE7 = ""
@@ -62,7 +62,7 @@ class Route(customtkinter.CTkFrame):
         self.entry1 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder1)
         self.entry2 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder2)
         self.entry3 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder3)
-        self.entry4 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder4, fg_color="#737373")
+        self.entry4 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder4)
         self.entry5 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder5, fg_color="#737373")
         self.entry6 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder6, fg_color="#737373")
         self.entry7 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder7, fg_color="#737373")
@@ -77,7 +77,6 @@ class Route(customtkinter.CTkFrame):
         self.entry6.grid(row=8, column=1, padx=(10,20), pady=0)
         self.entry7.grid(row=9, column=1, padx=(10,20), pady=0)
         
-        self.entry4.configure(state= "disabled")
         self.entry5.configure(state= "disabled")
         self.entry6.configure(state= "disabled")
         self.entry7.configure(state= "disabled")
@@ -186,11 +185,11 @@ class Route(customtkinter.CTkFrame):
         attribute6 = str(self.entry6.get())
         attribute7 = str(self.entry7.get())
 
-        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
-            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
-            or (len(attribute3) == 0 or attribute3.isspace() == 1) \
+        if (attribute1 == "" or attribute1 == " ") \
+            or (attribute2 == "" or attribute2 == " ") \
+            or (attribute3 == "" or attribute3 == " ") \
+            or (attribute4 == "" or attribute4 == " ") \
             :
-            # or (attribute4 == "" or attribute4 == " ") \
             # or (attribute5 == "" or attribute5 == " ") \
             # or (attribute6 == "" or attribute6 == " ") \
             # or (attribute7 == "" or attribute7 == " ") \
@@ -204,7 +203,7 @@ class Route(customtkinter.CTkFrame):
                 cursor.execute("INSERT INTO " + self.TABLE + " VALUES ('" + attribute1 +
                                "','" + attribute2 +
                                "','" + attribute3 +
-                            #    "','" + attribute4 +
+                               "','" + attribute4 +
                             #    "','" + attribute5 +
                             #    "','" + attribute6 +
                             #    "','" + attribute7 +
@@ -248,7 +247,7 @@ class Route(customtkinter.CTkFrame):
             attribute1 = str(selectedItem.split( )[0])
             attribute2 = str(selectedItem.split( )[1])
             attribute3 = str(self.tree.item(selectedItem)['values'][2])
-            # attribute4 = str(self.tree.item(selectedItem)['values'][3])
+            attribute4 = str(self.tree.item(selectedItem)['values'][3])
             # attribute5 = str(self.tree.item(selectedItem)['values'][4])
             # attribute6 = str(self.tree.item(selectedItem)['values'][5])
             # attribute7 = str(self.tree.item(selectedItem)['values'][6])
@@ -256,7 +255,7 @@ class Route(customtkinter.CTkFrame):
             self.setPlaceHolder(attribute1,1)
             self.setPlaceHolder(attribute2,2)
             self.setPlaceHolder(attribute3,3)
-            # self.setPlaceHolder(attribute4,4)
+            self.setPlaceHolder(attribute4,4)
             # self.setPlaceHolder(attribute5,5)
             # self.setPlaceHolder(attribute6,6)
             # self.setPlaceHolder(attribute7,7)
@@ -277,7 +276,7 @@ class Route(customtkinter.CTkFrame):
         cursor.execute("SELECT * FROM " + self.TABLE + " WHERE " + self.ATTRIBUTE1 + " = '" +  attribute1 +
                        "' or " + self.ATTRIBUTE2 + " = '" + attribute2 +
                        "' or " + self.ATTRIBUTE3 + " = '" + attribute3 +
-                    #    "' or " + self.ATTRIBUTE4 + " = '" + attribute4 +
+                       "' or " + self.ATTRIBUTE4 + " = '" + attribute4 +
                     #    "' or " + self.ATTRIBUTE5 + " = '" + attribute5 +
                     #    "' or " + self.ATTRIBUTE6 + " = '" + attribute6 +
                     #    "' or " + self.ATTRIBUTE7 + " = '" + attribute7 +
@@ -313,8 +312,8 @@ class Route(customtkinter.CTkFrame):
         if (len(attribute1) == 0 or attribute1.isspace() == 1) \
             or (len(attribute2) == 0 or attribute2.isspace() == 1) \
             or (len(attribute3) == 0 or attribute3.isspace() == 1) \
+            or (len(attribute4) == 0 or attribute4.isspace() == 1) \
             :
-            # or (attribute4 == "" or attribute4 == " ") \
             # or (attribute5 == "" or attribute5 == " ") \
             # or (attribute6 == "" or attribute6 == " ") \
             # or (attribute7 == "" or attribute7 == " ") \
@@ -328,7 +327,7 @@ class Route(customtkinter.CTkFrame):
                 cursor.execute("UPDATE " + self.TABLE + " SET " + self.ATTRIBUTE1 + " = '" + attribute1 +
                                "', " + self.ATTRIBUTE2 + " = '" + attribute2 +
                                "', " + self.ATTRIBUTE3 + " = '" + attribute3 +
-                            #    "', " + self.ATTRIBUTE4 + " = '" + attribute4 +
+                               "', " + self.ATTRIBUTE4 + " = '" + attribute4 +
                             #    "', " + self.ATTRIBUTE5 + " = '" + attribute5 +
                             #    "', " + self.ATTRIBUTE6 + " = '" + attribute6 +
                             #    "', " + self.ATTRIBUTE7 + " = '" + attribute7 +

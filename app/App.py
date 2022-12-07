@@ -1,10 +1,10 @@
 import sys
 sys.dont_write_bytecode = True
 
-import tkinter as tk                
-from tkinter import font as tkfont 
 from tkinter import *
+from tkinter import messagebox
 import customtkinter
+from login import Login
 from landing import Landing
 from userMenu.userList import UserList
 from userMenu.creditInformation import CreditInformation
@@ -35,6 +35,8 @@ class App(customtkinter.CTk):
 
         entityMenu = Menu(self)
         self.config(menu=entityMenu)
+        
+        self.logedIn = False
         
         # User Menu
         userMenu = Menu(entityMenu)
@@ -93,7 +95,8 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for tableFrame in (Landing, 
+        for tableFrame in (Login,
+                           Landing, 
                            UserList, CreditInformation,
                            SellerList, PersonalAccount, BusinessAccount, BrandAccount,
                            ProductList, CouponList, CouponForProduct,
@@ -107,14 +110,18 @@ class App(customtkinter.CTk):
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.showFrame("Landing")
+        self.showFrame("Login")
 
     def pressed(self):
         self.pressLabel = customtkinter.CTkLabel(self, text="Switch to this Page").pack()
 
     def showFrame(self, page_name):
-        frame = self.frames[page_name]
-        frame.tkraise()
+        if self.logedIn or page_name == "Login":
+            frame = self.frames[page_name]
+            frame.tkraise()
+        else:
+            messagebox.showinfo("Error!", "You have to log in first!")
+            return
         
     def exit(self):
         self.destroy()

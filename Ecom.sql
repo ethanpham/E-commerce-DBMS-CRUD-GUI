@@ -1,3 +1,4 @@
+#DROP DATABASE ecom;
 CREATE DATABASE ecom;
 
 USE ecom;
@@ -5,13 +6,17 @@ USE ecom;
 -- CREATING TABLE
 CREATE TABLE USER (
 	`ID` varchar(200) NOT NULL,
-    `Name` tinytext NOT NULL,
-    `Sex` tinytext NOT NULL,
+    `Name` varchar(200) NOT NULL,
+    `Sex` varchar(200) NOT NULL,
     `Birthdate` datetime NOT NULL,
     `Phone` varchar(200) NOT NULL,
     `Email` varchar(200) NOT NULL,
     `Address` varchar(200) NOT NULL,
-    PRIMARY KEY(`ID`)
+    PRIMARY KEY(`ID`),
+	CHECK (`Name` REGEXP '^[a-zA-Z ]+$'),
+    CHECK (`Sex` REGEXP '^[M|F]$'),
+    CHECK (`Phone` REGEXP '^[0-9x]+$')
+    #CHECK (`Birthdate` REGEXP '')
 );
 
 CREATE TABLE SELLER (
@@ -21,21 +26,25 @@ CREATE TABLE SELLER (
     `Logo` varchar(200) NOT NULL,
     `NationalID` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (ID) REFERENCES USER(ID)
+    FOREIGN KEY (ID) REFERENCES USER(ID),
+    CHECK (`Logo` REGEXP '^[a-zA-Z_0-9]+\.jpg$'),
+    CHECK (`NationalID` REGEXP '^[0-9x]+$')
 );
 
 CREATE TABLE PERSONAL_ACCOUNT (
 	`ID` varchar(200) NOT NULL,
     `PersonalTaxNum` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (ID) REFERENCES SELLER(ID)
+    FOREIGN KEY (ID) REFERENCES SELLER(ID),
+    CHECK (`PersonalTaxNum` REGEXP '^[0-9x]+$')
 );
 
 CREATE TABLE BUSINESS_ACCOUNT (
 	`ID` varchar(200) NOT NULL,
     `BusinessTaxNum` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (ID) REFERENCES SELLER(ID)
+    FOREIGN KEY (ID) REFERENCES SELLER(ID),
+    CHECK (`BusinessTaxNum` REGEXP '^[0-9x]+$')
 );
 
 CREATE TABLE BRAND_ACCOUNT (
@@ -43,14 +52,17 @@ CREATE TABLE BRAND_ACCOUNT (
     `BusinessTaxNum` varchar(200) NOT NULL,
     `BrandAgreement` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (ID) REFERENCES SELLER(ID)
+    FOREIGN KEY (ID) REFERENCES SELLER(ID),
+    CHECK (`BusinessTaxNum` REGEXP '^[0-9x]+$'),
+    CHECK (`BrandAgreement` REGEXP '^[a-zA-Z_0-9]+\.jpg$')
 );
 
 CREATE TABLE BUYER (
 	`ID` varchar(200) NOT NULL,
     `AccountType` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (ID) REFERENCES USER(ID)
+    FOREIGN KEY (ID) REFERENCES USER(ID),
+     CHECK (`AccountType` REGEXP '^[a-zA-Z]+$')
 );
 
 CREATE TABLE FAVORITE_STORE (
@@ -68,7 +80,9 @@ CREATE TABLE CREDIT (
     `ExpDate` datetime NOT NULL,
     `UserID` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (UserID) REFERENCES USER(ID)
+    FOREIGN KEY (UserID) REFERENCES USER(ID),
+     CHECK (`Bank` REGEXP '^[a-zA-Z ]+$'),
+    CHECK (`Number` REGEXP '^[0-9x]+$')
 );
 
 CREATE TABLE PRODUCT (
@@ -80,7 +94,10 @@ CREATE TABLE PRODUCT (
     `Quantity` int NOT NULL,
     `SellerID` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
-    FOREIGN KEY (SellerID) REFERENCES SELLER(ID)
+    FOREIGN KEY (SellerID) REFERENCES SELLER(ID),
+	#CONSTRAINT a1 CHECK (`Name` REGEXP '(\w)'),
+    CHECK (`Price` REGEXP '^[0-9]+$'),
+    CHECK (`Quantity` REGEXP '^[0-9]+$')
 );
 
 CREATE TABLE SHOP_ORDER (
@@ -91,7 +108,8 @@ CREATE TABLE SHOP_ORDER (
     `BuyerID` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`),
     FOREIGN KEY (SellerID) REFERENCES SELLER(ID),
-	FOREIGN KEY (BuyerID) REFERENCES BUYER(ID)
+	FOREIGN KEY (BuyerID) REFERENCES BUYER(ID),
+    CHECK (`PaymentMethod` REGEXP '^(Cash|Credit)$')
 );
 
 CREATE TABLE PRODUCT_ORDER (
@@ -100,14 +118,16 @@ CREATE TABLE PRODUCT_ORDER (
     `Quantity` int NOT NULL,
     PRIMARY KEY(`ProductID`, `OrderID`),
     FOREIGN KEY (ProductID) REFERENCES PRODUCT(ID),
-	FOREIGN KEY (OrderID) REFERENCES SHOP_ORDER(ID)
+	FOREIGN KEY (OrderID) REFERENCES SHOP_ORDER(ID),
+    CHECK (`Quantity` REGEXP '^[0-9]+$')
 );
 
 CREATE TABLE COUPON (
 	`ID` varchar(200) NOT NULL,
     `Code` varchar(200) NOT NULL,
     `ExpDate` datetime NOT NULL,
-    PRIMARY KEY(`ID`)
+    PRIMARY KEY(`ID`),
+    CHECK (`Code` REGEXP '^[A-Z0-9]+$')
 );
 
 CREATE TABLE BUYER_COUPON (
@@ -136,15 +156,18 @@ CREATE TABLE ORDER_COUPON (
 
 CREATE TABLE SHIPPER (
 	`ID` varchar(200) NOT NULL,
-    `Name` tinytext NOT NULL,
+    `Name` varchar(200) NOT NULL,
 	`Type` varchar(200) NOT NULL,
-    PRIMARY KEY(`ID`)
+    PRIMARY KEY(`ID`),
+    CHECK (`Name` REGEXP '^[a-zA-Z0-9 ]+$'),
+    CHECK (`Type` REGEXP '^(Insource|Outsource)$')
 );
 
 CREATE TABLE VEHICLE (
 	`ID` varchar(200) NOT NULL,
 	`Type` varchar(200) NOT NULL,
-	 PRIMARY KEY(`ID`)
+	 PRIMARY KEY(`ID`),
+    CHECK (`Type` REGEXP '^[a-zA-Z ]+$')
 );
 
 CREATE TABLE SHIPPER_VEHICLE (
@@ -154,7 +177,9 @@ CREATE TABLE SHIPPER_VEHICLE (
     `FeePerRangeUnit` int NOT NULL,
     PRIMARY KEY(`ShipperID`, `VehicleID`),
     FOREIGN KEY (ShipperID) REFERENCES SHIPPER(ID),
-	FOREIGN KEY (VehicleID) REFERENCES VEHICLE(ID)
+	FOREIGN KEY (VehicleID) REFERENCES VEHICLE(ID),
+    CHECK (`RangeInKM` REGEXP '^[0-9]+$'),
+    CHECK (`FeePerRangeUnit` REGEXP '^[0-9]+$')
 );
 
 CREATE TABLE SHIPPER_ORDER (
@@ -175,7 +200,9 @@ CREATE TABLE ROUTE (
     `RangeInKM` int NOT NULL,
     PRIMARY KEY(`ShipperID`, `OrderID`, `Route`),
     FOREIGN KEY (ShipperID) REFERENCES SHIPPER_ORDER(ShipperID),
-	FOREIGN KEY (OrderID) REFERENCES SHIPPER_ORDER(OrderID)
+	FOREIGN KEY (OrderID) REFERENCES SHIPPER_ORDER(OrderID),
+    CHECK (`RangeInKM` REGEXP '^[0-9]+$')
+    #CHECK (`Route` REGEXP '^[a-zA-Z ]+ -> [a-zA-Z ]+$')
 );
 
 -- INSERTING INFO

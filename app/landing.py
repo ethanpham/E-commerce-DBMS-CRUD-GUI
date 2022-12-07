@@ -26,12 +26,24 @@ class Landing(customtkinter.CTkFrame):
                                                    )
         self.info.grid(row=2, column=0, columnspan=10, sticky="nwe", padx=220, pady=(60, 30))
 
-        self.button = customtkinter.CTkButton(self, 
+        self.logoutButton = customtkinter.CTkButton(self, 
+                                          text="Logout", 
+                                          text_font=('Segoe Ui Bold', 12), 
+                                          width=140, 
+                                          height=40, 
+                                          corner_radius=8, 
+                                          command=self.logout)
+        self.exitButton = customtkinter.CTkButton(self, 
                                           text="Exit App", 
                                           text_font=('Segoe Ui Bold', 12), 
                                           width=140, 
                                           height=40, 
                                           corner_radius=8, 
                                           command=lambda: controller.exit())
-        self.button.grid(row=3, column=0, columnspan=10, padx=200, pady=(0,10))
+        self.logoutButton.grid(row=3, column=0, columnspan=10, padx=200, pady=(0,10))
+        self.exitButton.grid(row=4, column=0, columnspan=10, padx=200, pady=(0,10))
+        
+    def logout(self):
+        self.controller.logedIn = False
+        return self.controller.showFrame("Login")
         

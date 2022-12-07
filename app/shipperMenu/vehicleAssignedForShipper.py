@@ -10,7 +10,7 @@ class VehicleAssignedForShipper(customtkinter.CTkFrame):
     NUMBER_OF_ATTRIBUTE = 4
     ATTRIBUTE1 = "ShipperID"
     ATTRIBUTE2 = "VehicleID"
-    ATTRIBUTE3 = "Range(km)"
+    ATTRIBUTE3 = "RangeInKM"
     ATTRIBUTE4 = "FeePerRangeUnit"
     ATTRIBUTE5 = ""
     ATTRIBUTE6 = ""
