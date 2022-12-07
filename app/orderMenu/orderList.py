@@ -13,8 +13,8 @@ class OrderList(customtkinter.CTkFrame):
     ATTRIBUTE3 = "PaymentMethod"
     ATTRIBUTE4 = "SellerID"
     ATTRIBUTE5 = "BuyerID"
-    ATTRIBUTE6 = ""
-    ATTRIBUTE7 = ""
+    ATTRIBUTE6 = "TotalCost"
+    ATTRIBUTE7 = "TotalRange"
     
     def __init__(self, parent, controller):
         customtkinter.CTkFrame.__init__(self, parent)
@@ -64,8 +64,8 @@ class OrderList(customtkinter.CTkFrame):
         self.entry3 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder3)
         self.entry4 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder4)
         self.entry5 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder5)
-        self.entry6 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder6, fg_color="#737373")
-        self.entry7 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder7, fg_color="#737373")
+        self.entry6 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder6)
+        self.entry7 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder7)
 
         #, fg_color="#737373"
         
@@ -76,9 +76,6 @@ class OrderList(customtkinter.CTkFrame):
         self.entry5.grid(row=7, column=1, padx=(10,20), pady=0)
         self.entry6.grid(row=8, column=1, padx=(10,20), pady=0)
         self.entry7.grid(row=9, column=1, padx=(10,20), pady=0)
-        
-        self.entry6.configure(state= "disabled")
-        self.entry7.configure(state= "disabled")
 
         self.addButton = customtkinter.CTkButton(self, text = "Add", text_font=('Segoe Ui', 11), command = self.add)
         self.updateButton = customtkinter.CTkButton(self, text = "Update", text_font=('Segoe Ui', 11), command = self.update)
@@ -113,8 +110,8 @@ class OrderList(customtkinter.CTkFrame):
         self.tree.column(self.ATTRIBUTE1, anchor=W, width=100)
         self.tree.column(self.ATTRIBUTE2, anchor=W, width=220)
         self.tree.column(self.ATTRIBUTE3, anchor=W, width=180)
-        self.tree.column(self.ATTRIBUTE4, anchor=W, width=140)
-        self.tree.column(self.ATTRIBUTE5, anchor=W, width=130)
+        self.tree.column(self.ATTRIBUTE4, anchor=W, width=150)
+        self.tree.column(self.ATTRIBUTE5, anchor=W, width=150)
         self.tree.column(self.ATTRIBUTE6, anchor=W, width=170)
         self.tree.column(self.ATTRIBUTE7, anchor=W, width=290)
 
@@ -189,10 +186,9 @@ class OrderList(customtkinter.CTkFrame):
             or (len(attribute3) == 0 or attribute3.isspace() == 1) \
             or (len(attribute4) == 0 or attribute4.isspace() == 1) \
             or (len(attribute5) == 0 or attribute5.isspace() == 1) \
+            or (len(attribute6) == 0 or attribute6.isspace() == 1) \
+            or (len(attribute7) == 0 or attribute7.isspace() == 1) \
             :
-            # or (attribute6 == "" or attribute6 == " ") \
-            # or (attribute7 == "" or attribute7 == " ") \
-            # :
             messagebox.showinfo("Error!", "Please fill up the blank entry.")
             return
         else:
@@ -204,8 +200,8 @@ class OrderList(customtkinter.CTkFrame):
                                "','" + attribute3 +
                                "','" + attribute4 +
                                "','" + attribute5 +
-                            #    "','" + attribute6 +
-                            #    "','" + attribute7 +
+                               "','" + attribute6 +
+                               "','" + attribute7 +
                                "') ")
                 dbConnection.commit()
                 dbConnection.close()
@@ -246,16 +242,16 @@ class OrderList(customtkinter.CTkFrame):
             attribute3 = str(self.tree.item(selectedItem)['values'][2])
             attribute4 = str(selectedItem.split( )[-2])
             attribute5 = str(selectedItem.split( )[-1])
-            # attribute6 = str(self.tree.item(selectedItem)['values'][5])
-            # attribute7 = str(self.tree.item(selectedItem)['values'][6])
+            attribute6 = str(self.tree.item(selectedItem)['values'][5])
+            attribute7 = str(self.tree.item(selectedItem)['values'][6])
 
             self.setPlaceHolder(attribute1,1)
             self.setPlaceHolder(attribute2,2)
             self.setPlaceHolder(attribute3,3)
             self.setPlaceHolder(attribute4,4)
             self.setPlaceHolder(attribute5,5)
-            # self.setPlaceHolder(attribute6,6)
-            # self.setPlaceHolder(attribute7,7)
+            self.setPlaceHolder(attribute6,6)
+            self.setPlaceHolder(attribute7,7)
         except:
             messagebox.showinfo("Error!", "Please select a data row.")
 
@@ -275,8 +271,8 @@ class OrderList(customtkinter.CTkFrame):
                        "' or " + self.ATTRIBUTE3 + " = '" + attribute3 +
                        "' or " + self.ATTRIBUTE4 + " = '" + attribute4 +
                        "' or " + self.ATTRIBUTE5 + " = '" + attribute5 +
-                    #    "' or " + self.ATTRIBUTE6 + " = '" + attribute6 +
-                    #    "' or " + self.ATTRIBUTE7 + " = '" + attribute7 +
+                       "' or " + self.ATTRIBUTE6 + " = '" + attribute6 +
+                       "' or " + self.ATTRIBUTE7 + " = '" + attribute7 +
                        "' ")  
         try:
             result = cursor.fetchall()
@@ -311,10 +307,9 @@ class OrderList(customtkinter.CTkFrame):
             or (len(attribute3) == 0 or attribute3.isspace() == 1) \
             or (len(attribute4) == 0 or attribute4.isspace() == 1) \
             or (len(attribute5) == 0 or attribute5.isspace() == 1) \
+            or (len(attribute6) == 0 or attribute6.isspace() == 1) \
+            or (len(attribute7) == 0 or attribute7.isspace() == 1) \
             :
-            # or (attribute6 == "" or attribute6 == " ") \
-            # or (attribute7 == "" or attribute7 == " ") \
-            # :
             messagebox.showinfo("Error!", "Please fill up the blank entry.")
             return
         else:
@@ -326,8 +321,8 @@ class OrderList(customtkinter.CTkFrame):
                                "', " + self.ATTRIBUTE3 + " = '" + attribute3 +
                                "', " + self.ATTRIBUTE4 + " = '" + attribute4 +
                                "', " + self.ATTRIBUTE5 + " = '" + attribute5 +
-                            #    "', " + self.ATTRIBUTE6 + " = '" + attribute6 +
-                            #    "', " + self.ATTRIBUTE7 + " = '" + attribute7 +
+                               "', " + self.ATTRIBUTE6 + " = '" + attribute6 +
+                               "', " + self.ATTRIBUTE7 + " = '" + attribute7 +
                                "' WHERE " + self.ATTRIBUTE1 + " = '" + selectedId + "' ")
                 dbConnection.commit()
                 dbConnection.close()
