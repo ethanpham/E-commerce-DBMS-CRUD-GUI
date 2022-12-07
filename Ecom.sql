@@ -5,8 +5,8 @@ USE ecom;
 -- CREATING TABLE
 CREATE TABLE USER (
 	`ID` varchar(200) NOT NULL,
-    `Name` varchar(200) NOT NULL,
-    `Sex` varchar(200) NOT NULL,
+    `Name` tinytext NOT NULL,
+    `Sex` tinytext NOT NULL,
     `Birthdate` datetime NOT NULL,
     `Phone` varchar(200) NOT NULL,
     `Email` varchar(200) NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE ORDER_COUPON (
 
 CREATE TABLE SHIPPER (
 	`ID` varchar(200) NOT NULL,
-    `Name` varchar(200) NOT NULL,
+    `Name` tinytext NOT NULL,
 	`Type` varchar(200) NOT NULL,
     PRIMARY KEY(`ID`)
 );
@@ -150,7 +150,7 @@ CREATE TABLE VEHICLE (
 CREATE TABLE SHIPPER_VEHICLE (
 	`ShipperID` varchar(200) NOT NULL,
     `VehicleID` varchar(200) NOT NULL,
-    `Range(km)` int NOT NULL,
+    `RangeInKM` int NOT NULL,
     `FeePerRangeUnit` int NOT NULL,
     PRIMARY KEY(`ShipperID`, `VehicleID`),
     FOREIGN KEY (ShipperID) REFERENCES SHIPPER(ID),
@@ -172,6 +172,7 @@ CREATE TABLE ROUTE (
 	`ShipperID` varchar(200) NOT NULL,
     `OrderID` varchar(200) NOT NULL,
     `Route` varchar(200) NOT NULL,
+    `RangeInKM` int NOT NULL,
     PRIMARY KEY(`ShipperID`, `OrderID`, `Route`),
     FOREIGN KEY (ShipperID) REFERENCES SHIPPER_ORDER(ShipperID),
 	FOREIGN KEY (OrderID) REFERENCES SHIPPER_ORDER(OrderID)
@@ -183,7 +184,7 @@ INSERT INTO `USER` (`ID`, `Name`, `Sex`, `Birthdate`, `Phone`, `Email`, `Address
                     ('000001', 'Nguyen Hai Dang', 'M', '2005-10-07', '0909xxxxx6', 'email1@gmail.com', '109 Tran Duy Hung, P.Trung Hoa, Q.Cau Giay, Ha Noi'),
                     ('000002', 'Nguyen Manh Dan', 'M', '1995-06-17', '0909xxxxx8', 'email2@gmail.com', '1006 3 Thang 2, P.14, Q.10, TPHCM'),
                     ('000003', 'Truong Nguyen Hung Thinh', 'M', '1998-11-29', '0903xxxxx6', 'email3@gmail.com', '84 Nui Thanh, P.Hoa Cuong Bac, Q.Hai Chau, Da Nang'),
-                    ('000004', 'Dao Anh Tuan', 'M', '2001-03-23', '0903xxxxx1','email4@gmail.com', '241 Dao Duy Tu, P.7, Q.10, TPHCM'),
+                    ('000004', 'Dao Anh Tuan', 'M', '2001-03-23', '0903xxxxx1', 'email4@gmail.com', '241 Dao Duy Tu, P.7, Q.10, TPHCM'),
                     ('000005', 'Bui Quoc Minh Quan', 'M', '1987-01-21', '0902xxxxx7', 'email5@gmail.com', '491 Tran Nguyen Han, P.Ho Nam, Q.Le Chan, Hai Phong'),
                     ('000006', 'Nguyen Ha Trong Hieu', 'M', '1988-12-13', '0903xxxxx5', 'email6@gmail.com', '178 Le Thanh Nghi, P.Dong Tam, Q.Hai Ba Trung, Ha Noi'),
                     ('000007', 'Chu Gia Vu Khanh', 'M', '2008-05-04', '0902xxxxx4', 'email7@gmail.com', '315 Vo Van Ngan, P.Linh Chieu, Q.Thu Duc, TP.HCM');
@@ -239,21 +240,21 @@ INSERT INTO `CREDIT` (`ID`, `Number`, `Bank`, `ExpDate`, `UserID`) VALUES
                     ('000005', '1036xxxxxxxxxxx0', 'SCB', '2024-10-07', '000003');
                     
 INSERT INTO `PRODUCT` (`ID`, `Name`, `Brand`, `Type`, `Price`, `Quantity`, `SellerID`) VALUES
-					('000000', 'Watermelon', 'Local', 'Fruits & Vegetables', '15000', 14, '000004'),
-                    ('000001', 'Intel CPU', 'Intel', 'Electronics', '19000000', 4, '000002'),
-                    ('000002', 'Car wheels', 'Michelin', 'Cars & Motorbikes', '1750000', 50, '000007'),
-                    ('000003', 'Shampoo', 'Head & Shoulders', 'Beauty', '240000', 27, '000003'),
-                    ('000004', 'Piano', 'Kawai', 'Music', '68000000', 3, '000005'),
-                    ('000005', 'Plastic sunflower', 'Local', 'Decorations', '12000', 19, '000004'),
-                    ('000006', 'Apple', 'Local', 'Fruits & Vegetables', '21000', 17, '000004'),
-                    ('000007', 'ASUS Laptop', 'Local', 'Electronics', '23000000', 9, '000002'),
-                    ('000008', 'Facial moisturizer', 'CeraVe', 'Beauty', '67000', 23, '000003'),
-                    ('000009', 'Guitar', 'Cordoba', 'Music', '5900000', 10, '000005'),
-                    ('000010', 'Helmet', 'OEM', 'Clothing', '89000', 23, '000007'),
-                    ('000011', 'Protein shake', 'Fairlife', 'Foods', '133000', 12, '000000'),
-                    ('000012', 'Graphics card', 'NVIDIA', 'Electronics', '27500000', 6, '000002'),
-                    ('000013', 'Violin', 'Suzuki', 'Music', '10000000', 3, '000005'),
-                    ('000014', 'Dumbbell - 10kg', 'OEM', 'Others', '74000', 14, '000000'),
+					('000000', 'Watermelon', 'Local', 'Fruits & Vegetables', '15000', 124, '000004'),
+                    ('000001', 'Intel CPU', 'Intel', 'Electronics', '19000000', 94, '000002'),
+                    ('000002', 'Car wheels', 'Michelin', 'Cars & Motorbikes', '1750000', 90, '000007'),
+                    ('000003', 'Shampoo', 'Head & Shoulders', 'Beauty', '240000', 267, '000003'),
+                    ('000004', 'Piano', 'Kawai', 'Music', '68000000', 93, '000005'),
+                    ('000005', 'Plastic sunflower', 'Local', 'Decorations', '12000', 189, '000004'),
+                    ('000006', 'Apple', 'Local', 'Fruits & Vegetables', '21000', 117, '000004'),
+                    ('000007', 'ASUS Laptop', 'Local', 'Electronics', '23000000', 94, '000002'),
+                    ('000008', 'Facial moisturizer', 'CeraVe', 'Beauty', '67000', 123, '000003'),
+                    ('000009', 'Guitar', 'Cordoba', 'Music', '5900000', 60, '000005'),
+                    ('000010', 'Helmet', 'OEM', 'Clothing', '89000', 203, '000007'),
+                    ('000011', 'Protein shake', 'Fairlife', 'Foods', '133000', 52, '000000'),
+                    ('000012', 'Graphics card', 'NVIDIA', 'Electronics', '27500000', 76, '000002'),
+                    ('000013', 'Violin', 'Suzuki', 'Music', '10000000', 36, '000005'),
+                    ('000014', 'Dumbbell - 10kg', 'OEM', 'Others', '74000', 148, '000000'),
                     ('000015', 'AMD CPU', 'AMD', 'Electronics', '16200000', 20, '000002');
 
 INSERT INTO `SHOP_ORDER` (`ID`, `Date`, `PaymentMethod`, `SellerID`, `BuyerID`) VALUES
@@ -275,32 +276,32 @@ INSERT INTO `SHOP_ORDER` (`ID`, `Date`, `PaymentMethod`, `SellerID`, `BuyerID`) 
                     ('000015', '2018-06-25', 'Credit', '000004', '000001');
                     
 INSERT INTO `PRODUCT_ORDER` (`ProductID`, `OrderID`, `Quantity`) VALUES
-					('000002', '000000', 4),
-					('000003', '000001', 5),
-                    ('000007', '000002', 9),
-                    ('000008', '000003', 7),
-                    ('000010', '000004', 2),
-                    ('000015', '000005', 12),
-                    ('000014', '000006', 21),
-                    ('000013', '000007', 3),
-                    ('000012', '000008', 4),
-                    ('000009', '000009', 8),
-                    ('000002', '000015', 1),
-                    ('000000', '000010', 11),
-                    ('000007', '000012', 2),
-                    ('000008', '000014', 19),
-                    ('000008', '000015', 10),
-					('000009', '000002', 12),
-                    ('000014', '000012', 25),
-                    ('000013', '000001', 5),
-                    ('000012', '000004', 9),
-                    ('000006', '000003', 7),
-                    ('000000', '000007', 14),
-                    ('000001', '000011', 9),
-                    ('000004', '000012', 5),
-                    ('000005', '000013', 17),
-                    ('000006', '000014', 15),
-                    ('000011', '000015', 20);
+					('000007', '000000', 4),
+					('000012', '000001', 5),
+                    ('000010', '000002', 9),
+                    ('000014', '000003', 7),
+                    ('000002', '000004', 2),
+                    ('000003', '000005', 12),
+                    ('000000', '000006', 21), 
+                    ('000008', '000007', 3), 
+                    ('000009', '000008', 4), 
+                    ('000013', '000009', 8), 
+                    ('000011', '000010', 1), 
+                    ('000010', '000011', 11),
+                    ('000013', '000012', 2),
+                    ('000011', '000013', 19), 
+                    ('000012', '000014', 10),
+					('000005', '000015', 12),
+                    ('000012', '000000', 25),
+                    ('000002', '000002', 5),
+                    ('000010', '000004', 9),
+                    ('000005', '000006', 7),
+                    ('000004', '000008', 14),
+                    ('000014', '000010', 9),
+                    ('000009', '000012', 5),
+                    ('000001', '000014', 17),
+                    ('000001', '000001', 15),
+                    ('000012', '000003', 20);
 
 INSERT INTO `COUPON` (`ID`, `Code`, `ExpDate`) VALUES
 					('000000', 'AES004', '2022-12-13'),
@@ -378,7 +379,7 @@ INSERT INTO `VEHICLE` (`ID`, `Type`) VALUES
                     ('000001', 'Small truck'),
                     ('000002', 'Large truck');
 
-INSERT INTO `SHIPPER_VEHICLE` (`ShipperID`, `VehicleID`, `Range(km)`, `FeePerRangeUnit`) VALUES
+INSERT INTO `SHIPPER_VEHICLE` (`ShipperID`, `VehicleID`, `RangeInKM`, `FeePerRangeUnit`) VALUES
 					('000000', '000000', 22, 16000),
                     ('000001', '000000', 22, 15000),
                     ('000002', '000000', 23, 15000),
@@ -422,87 +423,50 @@ INSERT INTO `SHIPPER_ORDER` (`ShipperID`, `OrderID`, `Address`, `StartingDate`, 
                     ('000006', '000014', '178 Le Thanh Nghi, P.Dong Tam, Q.Hai Ba Trung, Ha Noi', '2020-07-29', '2020-08-07'),
                     ('000001', '000015', '109 Tran Duy Hung, P.Trung Hoa, Q.Cau Giay, Ha Noi', '2018-06-25', '2018-07-02');
                     
-INSERT INTO `ROUTE` (`ShipperID`, `OrderID`, `Route`) VALUES
-					('000002', '000000', 'TPHCM -> Ha Noi'),
-					('000000', '000001', 'TPHCM'),
-					('000007', '000002', 'TPHCM -> Ha Noi'),
-                    ('000006', '000003', 'TPHCM -> Ha Noi'),
-                    ('000005', '000004', 'TPHCM -> Hai Phong'),
-                    ('000002', '000005', 'Da Nang -> TPHCM'),
-                    ('000000', '000006', 'TPHCM'),
-                    ('000001', '000007', 'Da Nang -> TPHCM'),
-                    ('000007', '000008', 'Hai Phong -> Ha Noi'),
-                    ('000003', '000009', 'Hai Phong -> TPHCM'),
-                    ('000003', '000010', 'TPHCM -> Da Nang'),
-                    ('000004', '000011', 'TPHCM -> Hai Phong'),
-                    ('000005', '000012', 'Hai Phong -> TPHCM'),
-                    ('000003', '000013', 'TPHCM'),
-                    ('000006', '000014', 'TPHCM -> Ha Noi'),
-                    ('000001', '000015', 'TPHCM');
+INSERT INTO `ROUTE` (`ShipperID`, `OrderID`, `Route`, `RangeInKM`) VALUES
+					('000002', '000000', 'TPHCM -> Ha Noi', 1641),
+					('000000', '000001', 'TPHCM', 13),
+					('000007', '000002', 'TPHCM -> Ha Noi', 1641),
+                    ('000006', '000003', 'TPHCM -> Ha Noi', 1641),
+                    ('000005', '000004', 'TPHCM -> Hai Phong', 1780),
+                    ('000002', '000005', 'Da Nang -> TPHCM', 958),
+                    ('000000', '000006', 'TPHCM', 5),
+                    ('000001', '000007', 'Da Nang -> TPHCM', 958),
+                    ('000007', '000008', 'Hai Phong -> Ha Noi', 139),
+                    ('000003', '000009', 'Hai Phong -> TPHCM', 1780),
+                    ('000003', '000010', 'TPHCM -> Da Nang', 958),
+                    ('000004', '000011', 'TPHCM -> Hai Phong', 1780),
+                    ('000005', '000012', 'Hai Phong -> TPHCM', 1780),
+                    ('000003', '000013', 'TPHCM', 9),
+                    ('000006', '000014', 'TPHCM -> Ha Noi', 1641),
+                    ('000001', '000015', 'TPHCM', 12);
 
- -- SELECTING INFO     
-SELECT * from USER;
-SELECT * from SELLER;
-SELECT * from PERSONAL_ACCOUNT;
-SELECT * from BUSINESS_ACCOUNT;
-SELECT * from BRAND_ACCOUNT;
-SELECT * from BUYER;
-SELECT * from FAVORITE_STORE;
-SELECT * from CREDIT;
-SELECT * from PRODUCT;
-SELECT * from SHOP_ORDER;
-SELECT * from PRODUCT_ORDER;
-SELECT * from COUPON;
-SELECT * from BUYER_COUPON;
-SELECT * from PRODUCT_COUPON;
-SELECT * from ORDER_COUPON;
-SELECT * from SHIPPER;
-SELECT * from VEHICLE;
-SELECT * from SHIPPER_VEHICLE;
-SELECT * from SHIPPER_ORDER;
-SELECT * from ROUTE;
-
--- DELETING INFO
-DELETE FROM ROUTE;
-DELETE FROM SHIPPER_ORDER;
-DELETE FROM SHIPPER_VEHICLE;
-DELETE FROM VEHICLE;
-DELETE FROM SHIPPER;
-DELETE FROM ORDER_COUPON;
-DELETE FROM PRODUCT_COUPON;
-DELETE FROM BUYER_COUPON;
-DELETE FROM COUPON;
-DELETE FROM PRODUCT_ORDER;
-DELETE FROM SHOP_ORDER;
-DELETE FROM PRODUCT;
-DELETE FROM CREDIT;
-DELETE FROM FAVORITE_STORE;
-DELETE FROM BUYER;
-DELETE FROM BRAND_ACCOUNT;
-DELETE FROM BUSINESS_ACCOUNT;
-DELETE FROM PERSONAL_ACCOUNT;
-DELETE FROM SELLER;
-DELETE FROM USER;
-
--- DROPPING TABLE & DATABASE
-DROP TABLE ROUTE;
-DROP TABLE SHIPPER_ORDER;
-DROP TABLE SHIPPER_VEHICLE;
-DROP TABLE VEHICLE;
-DROP TABLE SHIPPER;
-DROP TABLE ORDER_COUPON;
-DROP TABLE PRODUCT_COUPON;
-DROP TABLE BUYER_COUPON;
-DROP TABLE COUPON;
-DROP TABLE PRODUCT_ORDER;
-DROP TABLE SHOP_ORDER;
-DROP TABLE PRODUCT;
-DROP TABLE CREDIT;
-DROP TABLE FAVORITE_STORE;
-DROP TABLE BUYER;
-DROP TABLE BRAND_ACCOUNT;
-DROP TABLE BUSINESS_ACCOUNT;
-DROP TABLE PERSONAL_ACCOUNT;
-DROP TABLE SELLER;
-DROP TABLE USER;
-DROP DATABASE ecom;
+-- CALCULATE TOTAL COST OF EACH ORDER
+SELECT OrderID, USER.Name, sum(PRODUCT_ORDER.Quantity * Price) as TotalCost
+	FROM PRODUCT_ORDER
+		INNER JOIN PRODUCT ON ProductID = PRODUCT.ID
+		INNER JOIN SHOP_ORDER ON OrderID = SHOP_ORDER.ID
+        INNER JOIN USER ON BuyerID = USER.ID
+			GROUP BY OrderID
+				ORDER BY OrderID ASC;
+-- CALCULATE TOTAL MONEY SPENT BY EACH BUYER
+SELECT USER.Name, sum(PRODUCT_ORDER.Quantity * Price) as TotalMoneySpent
+	FROM PRODUCT_ORDER
+		INNER JOIN PRODUCT ON ProductID = PRODUCT.ID
+		INNER JOIN SHOP_ORDER ON OrderID = SHOP_ORDER.ID
+        INNER JOIN USER ON BuyerID = USER.ID
+			GROUP BY USER.Name
+				ORDER BY User.Name ASC;
+-- CALCULATE TOTAL REVENUE EARNED BY EACH SELLER
+SELECT USER.Name, sum(PRODUCT_ORDER.Quantity * Price) as TotalRevenue
+	FROM PRODUCT_ORDER
+		INNER JOIN PRODUCT ON ProductID = PRODUCT.ID
+		INNER JOIN SHOP_ORDER ON OrderID = SHOP_ORDER.ID
+        INNER JOIN USER ON SHOP_ORDER.SellerID = USER.ID
+			GROUP BY USER.Name
+				ORDER BY User.Name ASC;
+-- CALCULATE TOTAL DISTANCE TRAVELED BY ORDER
+SELECT OrderID, ROUTE.RangeInKM
+	FROM SHOP_ORDER
+		INNER JOIN ROUTE ON SHOP_ORDER.ID = OrderID
+				ORDER BY SHOP_ORDER.ID ASC;

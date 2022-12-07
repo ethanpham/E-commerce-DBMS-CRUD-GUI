@@ -185,13 +185,13 @@ class ProductList(customtkinter.CTkFrame):
         attribute6 = str(self.entry6.get())
         attribute7 = str(self.entry7.get())
 
-        if (attribute1 == "" or attribute1 == " ") \
-            or (attribute2 == "" or attribute2 == " ") \
-            or (attribute3 == "" or attribute3 == " ") \
-            or (attribute4 == "" or attribute4 == " ") \
-            or (attribute5 == "" or attribute5 == " ") \
-            or (attribute6 == "" or attribute6 == " ") \
-            or (attribute7 == "" or attribute7 == " ") \
+        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
+            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
+            or (len(attribute3) == 0 or attribute3.isspace() == 1) \
+            or (len(attribute4) == 0 or attribute4.isspace() == 1) \
+            or (len(attribute5) == 0 or attribute5.isspace() == 1) \
+            or (len(attribute6) == 0 or attribute6.isspace() == 1) \
+            or (len(attribute7) == 0 or attribute7.isspace() == 1) \
             :
             messagebox.showinfo("Error!", "Please fill up the blank entry.")
             return
@@ -210,7 +210,7 @@ class ProductList(customtkinter.CTkFrame):
                 dbConnection.commit()
                 dbConnection.close()
             except:
-                messagebox.showinfo("Error!", "ID already exist.")
+                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
                 return
 
         self.refreshTable()
@@ -306,13 +306,13 @@ class ProductList(customtkinter.CTkFrame):
         attribute6 = str(self.entry6.get())
         attribute7 = str(self.entry7.get())
 
-        if (attribute1 == "" or attribute1 == " ") \
-            or (attribute2 == "" or attribute2 == " ") \
-            or (attribute3 == "" or attribute3 == " ") \
-            or (attribute4 == "" or attribute4 == " ") \
-            or (attribute5 == "" or attribute5 == " ") \
-            or (attribute6 == "" or attribute6 == " ") \
-            or (attribute7 == "" or attribute7 == " ") \
+        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
+            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
+            or (len(attribute3) == 0 or attribute3.isspace() == 1) \
+            or (len(attribute4) == 0 or attribute4.isspace() == 1) \
+            or (len(attribute5) == 0 or attribute5.isspace() == 1) \
+            or (len(attribute6) == 0 or attribute6.isspace() == 1) \
+            or (len(attribute7) == 0 or attribute7.isspace() == 1) \
             :
             messagebox.showinfo("Error!", "Please fill up the blank entry.")
             return
@@ -331,7 +331,7 @@ class ProductList(customtkinter.CTkFrame):
                 dbConnection.commit()
                 dbConnection.close()
             except:
-                messagebox.showinfo("Error!", "ID already exist.")
+                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
                 return
 
         self.refreshTable()

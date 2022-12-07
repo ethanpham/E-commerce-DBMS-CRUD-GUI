@@ -187,8 +187,8 @@ class VehicleList(customtkinter.CTkFrame):
         attribute6 = str(self.entry6.get())
         attribute7 = str(self.entry7.get())
 
-        if (attribute1 == "" or attribute1 == " ") \
-            or (attribute2 == "" or attribute2 == " ") \
+        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
+            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
             :
             # or (attribute3 == "" or attribute3 == " ") \
             # or (attribute4 == "" or attribute4 == " ") \
@@ -292,7 +292,7 @@ class VehicleList(customtkinter.CTkFrame):
             dbConnection.commit()
             dbConnection.close()
         except:
-            messagebox.showinfo("Error!", "No data found.")
+            messagebox.showinfo("No data found.")
 
     def update(self):
         selectedId = ""
@@ -311,8 +311,8 @@ class VehicleList(customtkinter.CTkFrame):
         attribute6 = str(self.entry6.get())
         attribute7 = str(self.entry7.get())
 
-        if (attribute1 == "" or attribute1 == " ") \
-            or (attribute2 == "" or attribute2 == " ") \
+        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
+            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
             :
             # or (attribute3 == "" or attribute3 == " ") \
             # or (attribute4 == "" or attribute4 == " ") \
@@ -337,7 +337,7 @@ class VehicleList(customtkinter.CTkFrame):
                 dbConnection.commit()
                 dbConnection.close()
             except:
-                messagebox.showinfo("Error!", "ID already exist.")
+                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
                 return
 
         self.refreshTable()
