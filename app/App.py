@@ -4,6 +4,8 @@ sys.dont_write_bytecode = True
 from tkinter import *
 from tkinter import messagebox
 import customtkinter
+import pymysql.cursors
+from itertools import chain
 from login import Login
 from landing import Landing
 from userMenu.userList import UserList
@@ -159,6 +161,155 @@ class App(customtkinter.CTk):
         else:
             messagebox.showinfo("Error!", "You have to log in first!")
             return
+        
+    def connection(self):
+        dbConnection = pymysql.connect(
+            host = 'localhost',
+            user = 'root', 
+            password = '',
+            db = 'ecom',
+        )
+        return dbConnection
+
+    def refreshTable(self, child):
+        for data in child.tree.get_children():
+            child.tree.delete(data)
+
+        for array in self.read(child):
+            child.tree.insert(parent = '', index = 'end', iid=array, text = "", values=(array), tag = "oddrow")
+
+        child.tree.tag_configure('oddrow', font=('Segoe Ui', 10))
+        child.tree.grid(row=12, column=0, columnspan=7, padx=50, pady=50)
+        
+    def setPlaceHolder(self, child, word, num):
+        if num == 1:
+            child.placeHolder1.set(word)
+        if num == 2:
+            child.placeHolder2.set(word)
+        if num == 3:
+            child.placeHolder3.set(word)
+        if num == 4:
+            child.placeHolder4.set(word)
+        if num == 5:
+            child.placeHolder5.set(word)
+        if num == 6:
+            child.placeHolder6.set(word)
+        if num == 7:
+            child.placeHolder7.set(word)
+    
+    def read(self, child):
+        dbConnection = self.connection()
+        cursor = dbConnection.cursor()
+        cursor.callproc('READTABLE', (child.TABLE,))
+        results = cursor.fetchall()
+        dbConnection.commit()
+        dbConnection.close()
+        return results
+
+    def add(self, child):
+        attribute1 = str(child.entry1.get())
+        attribute2 = str(child.entry2.get())
+        attribute3 = str(child.entry3.get())
+        attribute4 = str(child.entry4.get())
+        attribute5 = str(child.entry5.get())
+        attribute6 = str(child.entry6.get())
+        attribute7 = str(child.entry7.get())
+        
+        attributes = list(chain(attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7))
+        
+        for num in range(0, child.NUMBER_OF_ATTRIBUTE):
+            if (len(attributes[num]) == 0 or attributes[num].isspace() == 1): 
+                messagebox.showinfo("Error!", "Please fill up the blank entry.")
+                return
+        else:
+            try:
+                dbConnection = self.connection()
+                cursor = dbConnection.cursor()
+                cursor.callproc('ADDVALUE', (child.TABLE, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7,))
+                dbConnection.commit()
+                dbConnection.close()
+            except:
+                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
+                return
+
+        self.refreshTable(child)
+
+    def delete(self, child):
+        decision = messagebox.askquestion("Warning!", "This will delete the data directly from the table. Do you want to continue?")
+        if decision != "yes":
+            return 
+        else:
+            if not child.tree.selection():
+                messagebox.showinfo("Error!", "You have not chosen the data from the table.")
+                return 
+            else:
+                selectedItem = child.tree.selection()[0]
+                deleteData = str(selectedItem.split( )[0])
+                try:
+                    dbConnection = self.connection()
+                    cursor = dbConnection.cursor()
+                    cursor.callproc('DELETEVALUE', (child.TABLE, deleteData, "", "",))
+                    dbConnection.commit()
+                    dbConnection.close()
+                except:
+                    messagebox.showinfo("Error!", "Sorry an error occurred!")
+                    return
+
+                self.refreshTable(child)
+                
+    def search(self, child):
+        attribute1 = str(child.entry1.get())
+        attribute2 = str(child.entry2.get())
+        attribute3 = str(child.entry3.get())
+        
+        dbConnection = self.connection()
+        cursor = dbConnection.cursor()
+        cursor.callproc('SEARCHVALUE', (child.TABLE, attribute1, attribute2, attribute3,))
+        try:
+            result = cursor.fetchall()
+            
+            for num in range(0, child.NUMBER_OF_ATTRIBUTE):
+                self.setPlaceHolder(child, result[0][num], (num + 1))
+
+            dbConnection.commit()
+            dbConnection.close()
+        except:
+            messagebox.showinfo("No data found.")
+
+    def update(self, child):
+        selectedId = ""
+        try:
+            selectedItem = child.tree.selection()[0]
+            selectedId = str(selectedItem.split( )[0])
+        except:
+            messagebox.showinfo("Error!", "Please select a data row.")
+
+        attribute1 = str(child.entry1.get())
+        attribute2 = str(child.entry2.get())
+        attribute3 = str(child.entry3.get())
+        attribute4 = str(child.entry4.get())
+        attribute5 = str(child.entry5.get())
+        attribute6 = str(child.entry6.get())
+        attribute7 = str(child.entry7.get())
+
+        attributes = list(chain(attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7))
+        
+        for num in range(0, child.NUMBER_OF_ATTRIBUTE):
+            if (len(attributes[num]) == 0 or attributes[num].isspace() == 1): 
+                messagebox.showinfo("Error!", "Please fill up the blank entry.")
+                return
+        else:
+            try:
+                dbConnection = self.connection()
+                cursor = dbConnection.cursor()
+                cursor.callproc('UPDATEVALUE', (child.TABLE, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7,))
+                dbConnection.commit()
+                dbConnection.close()
+            except:
+                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
+                return
+
+        self.refreshTable(child)
         
     def exit(self):
         self.destroy()

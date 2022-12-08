@@ -83,10 +83,10 @@ class BusinessAccount(customtkinter.CTkFrame):
         self.entry6.configure(state= "disabled")
         self.entry7.configure(state= "disabled")
 
-        self.addButton = customtkinter.CTkButton(self, text = "Add", text_font=('Segoe Ui', 11), command = self.add)
-        self.updateButton = customtkinter.CTkButton(self, text = "Update", text_font=('Segoe Ui', 11), command = self.update)
-        self.deleteButton = customtkinter.CTkButton(self, text = "Delete", text_font=('Segoe Ui', 11), command = self.delete)
-        self.searchButton = customtkinter.CTkButton(self, text = "Search", text_font=('Segoe Ui', 11), command = self.search)
+        self.addButton = customtkinter.CTkButton(self, text = "Add", text_font=('Segoe Ui', 11), command = lambda: controller.add(self))
+        self.updateButton = customtkinter.CTkButton(self, text = "Update", text_font=('Segoe Ui', 11), command = lambda: controller.update(self))
+        self.deleteButton = customtkinter.CTkButton(self, text = "Delete", text_font=('Segoe Ui', 11), command = lambda: controller.delete(self))
+        self.searchButton = customtkinter.CTkButton(self, text = "Search", text_font=('Segoe Ui', 11), command = lambda: controller.search(self))
         self.selectButton = customtkinter.CTkButton(self, text = "Select", text_font=('Segoe Ui', 11), command = self.select)
         self.backToLandingButton = customtkinter.CTkButton(self, 
                                                         text = "Back To Landing", 
@@ -132,212 +132,15 @@ class BusinessAccount(customtkinter.CTkFrame):
         self.rowStyle = ttk.Style()
         self.rowStyle.configure("Treeview", rowheight=30)
         
-        self.refreshTable()
-        
-    def connection(self):
-        dbConnection = pymysql.connect(
-            host = 'localhost',
-            user = 'root', 
-            password = '',
-            db = 'ecom',
-        )
-        return dbConnection
-
-    def refreshTable(self):
-        for data in self.tree.get_children():
-            self.tree.delete(data)
-
-        for array in self.read():
-            self.tree.insert(parent = '', index = 'end', iid=array, text = "", values=(array), tag = "oddrow")
-
-        self.tree.tag_configure('oddrow', font=('Segoe Ui', 10))
-        self.tree.grid(row=12, column=0, columnspan=7, padx=50, pady=50)
-
-    def setPlaceHolder(self,word,num):
-        if num == 1:
-            self.placeHolder1.set(word)
-        if num == 2:
-            self.placeHolder2.set(word)
-        if num == 3:
-            self.placeHolder3.set(word)
-        if num == 4:
-            self.placeHolder4.set(word)
-        if num == 5:
-            self.placeHolder5.set(word)
-        if num == 6:
-            self.placeHolder6.set(word)
-        if num == 7:
-            self.placeHolder7.set(word)
-
-    def read(self):
-        dbConnection = self.connection()
-        cursor = dbConnection.cursor()
-        cursor.execute("SELECT * FROM " + self.TABLE)
-        results = cursor.fetchall()
-        dbConnection.commit()
-        dbConnection.close()
-        return results
-
-    def add(self):
-        attribute1 = str(self.entry1.get())
-        attribute2 = str(self.entry2.get())
-        attribute3 = str(self.entry3.get())
-        attribute4 = str(self.entry4.get())
-        attribute5 = str(self.entry5.get())
-        attribute6 = str(self.entry6.get())
-        attribute7 = str(self.entry7.get())
-
-        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
-            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
-            :
-            # or (attribute3 == "" or attribute3 == " ") \
-            # or (attribute4 == "" or attribute4 == " ") \
-            # or (attribute5 == "" or attribute5 == " ") \
-            # or (attribute6 == "" or attribute6 == " ") \
-            # or (attribute7 == "" or attribute7 == " ") \
-            # :
-            messagebox.showinfo("Error!", "Please fill up the blank entry.")
-            return
-        else:
-            try:
-                dbConnection = self.connection()
-                cursor = dbConnection.cursor()
-                cursor.execute("INSERT INTO " + self.TABLE + " VALUES ('" + attribute1 +
-                               "','" + attribute2 +
-                            #    "','" + attribute3 +
-                            #    "','" + attribute4 +
-                            #    "','" + attribute5 +
-                            #    "','" + attribute6 +
-                            #    "','" + attribute7 +
-                               "') ")
-                dbConnection.commit()
-                dbConnection.close()
-            except:
-                messagebox.showinfo("Error!", "There are many situation you may meet:\n\n" +
-                                    "- You add a new seller which already exists.\n" +
-                                    "- You have not yet had the user with this ID. (Seller have to be a User)")
-                return
-
-        self.refreshTable()
-
-    def delete(self):
-        decision = messagebox.askquestion("Warning!", "This will delete the data directly from the table. Do you want to continue?")
-        if decision != "yes":
-            return 
-        else:
-            if not self.tree.selection():
-                messagebox.showinfo("Error!", "You have not chosen the data from the table.")
-                return 
-            else:
-                selectedItem = self.tree.selection()[0]
-                deleteData = str(selectedItem.split( )[0])
-                try:
-                    dbConnection = self.connection()
-                    cursor = dbConnection.cursor()
-                    cursor.execute("DELETE FROM " + self.TABLE + " WHERE " + self.ATTRIBUTE1 + " = '" + str(deleteData) + "'")
-                    dbConnection.commit()
-                    dbConnection.close()
-                except:
-                    messagebox.showinfo("Error!", "Sorry an error occurred!")
-                    return
-
-                self.refreshTable()
+        self.controller.refreshTable(self)
 
     def select(self):
         try:
             selectedItem = self.tree.selection()[0]
             attribute1 = str(selectedItem.split( )[0])
             attribute2 = str(self.tree.item(selectedItem)['values'][1])
-            # attribute3 = str(self.tree.item(selectedItem)['values'][2])
-            # attribute4 = str(self.tree.item(selectedItem)['values'][3])
-            # attribute5 = str(self.tree.item(selectedItem)['values'][4])
-            # attribute6 = str(self.tree.item(selectedItem)['values'][5])
-            # attribute7 = str(self.tree.item(selectedItem)['values'][6])
 
-            self.setPlaceHolder(attribute1,1)
-            self.setPlaceHolder(attribute2,2)
-            # self.setPlaceHolder(attribute3,3)
-            # self.setPlaceHolder(attribute4,4)
-            # self.setPlaceHolder(attribute5,5)
-            # self.setPlaceHolder(attribute6,6)
-            # self.setPlaceHolder(attribute7,7)
+            self.controller.setPlaceHolder(self, attribute1, 1)
+            self.controller.setPlaceHolder(self, attribute2, 2)
         except:
             messagebox.showinfo("Error!", "Please select a data row.")
-
-    def search(self):
-        attribute1 = str(self.entry1.get())
-        attribute2 = str(self.entry2.get())
-        attribute3 = str(self.entry3.get())
-        attribute4 = str(self.entry4.get())
-        attribute5 = str(self.entry5.get())
-        attribute6 = str(self.entry6.get())
-        attribute7 = str(self.entry7.get())
-
-        dbConnection = self.connection()
-        cursor = dbConnection.cursor()
-        cursor.execute("SELECT * FROM " + self.TABLE + " WHERE " + self.ATTRIBUTE1 + " = '" +  attribute1 +
-                       "' or " + self.ATTRIBUTE2 + " = '" + attribute2 +
-                    #    "' or " + self.ATTRIBUTE3 + " = '" + attribute3 +
-                    #    "' or " + self.ATTRIBUTE4 + " = '" + attribute4 +
-                    #    "' or " + self.ATTRIBUTE5 + " = '" + attribute5 +
-                    #    "' or " + self.ATTRIBUTE6 + " = '" + attribute6 +
-                    #    "' or " + self.ATTRIBUTE7 + " = '" + attribute7 +
-                       "' ")  
-        try:
-            result = cursor.fetchall()
-
-            for num in range(0,self.NUMBER_OF_ATTRIBUTE):
-                self.setPlaceHolder(result[0][num],(num + 1))
-
-            dbConnection.commit()
-            dbConnection.close()
-        except:
-            messagebox.showinfo("No data found.")
-
-    def update(self):
-        selectedId = ""
-        try:
-            selectedItem = self.tree.selection()[0]
-            # selectedId = str(self.tree.item(selectedItem)['values'][0])
-            selectedId = str(selectedItem.split( )[0])
-        except:
-            messagebox.showinfo("Error!", "Please select a data row.")
-
-        attribute1 = str(self.entry1.get())
-        attribute2 = str(self.entry2.get())
-        attribute3 = str(self.entry3.get())
-        attribute4 = str(self.entry4.get())
-        attribute5 = str(self.entry5.get())
-        attribute6 = str(self.entry6.get())
-        attribute7 = str(self.entry7.get())
-
-        if (len(attribute1) == 0 or attribute1.isspace() == 1) \
-            or (len(attribute2) == 0 or attribute2.isspace() == 1) \
-            :
-            # or (attribute3 == "" or attribute3 == " ") \
-            # or (attribute4 == "" or attribute4 == " ") \
-            # or (attribute5 == "" or attribute5 == " ") \
-            # or (attribute6 == "" or attribute6 == " ") \
-            # or (attribute7 == "" or attribute7 == " ") \
-            # :
-            messagebox.showinfo("Error!", "Please fill up the blank entry.")
-            return
-        else:
-            try:
-                dbConnection = self.connection()
-                cursor = dbConnection.cursor()
-                cursor.execute("UPDATE " + self.TABLE + " SET " + self.ATTRIBUTE1 + " = '" + attribute1 +
-                               "', " + self.ATTRIBUTE2 + " = '" + attribute2 +
-                            #    "', " + self.ATTRIBUTE3 + " = '" + attribute3 +
-                            #    "', " + self.ATTRIBUTE4 + " = '" + attribute4 +
-                            #    "', " + self.ATTRIBUTE5 + " = '" + attribute5 +
-                            #    "', " + self.ATTRIBUTE6 + " = '" + attribute6 +
-                            #    "', " + self.ATTRIBUTE7 + " = '" + attribute7 +
-                               "' WHERE " + self.ATTRIBUTE1 + " = '" + selectedId + "' ")
-                dbConnection.commit()
-                dbConnection.close()
-            except:
-                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
-                return
-
-        self.refreshTable()
