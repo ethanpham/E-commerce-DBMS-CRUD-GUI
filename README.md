@@ -1,4 +1,4 @@
-# E-commerce Database Management System CRUD
+# E-commerce DBMS CRUD GUI
 
 A simple CRUD to perform basic database SQL on a conceptual database of an E-commerce system.
 
