@@ -9,7 +9,7 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 
 ## Run Locally
 
-Clone the project
+- Clone the project
 
 - Install Packages
 
