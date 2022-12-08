@@ -10,22 +10,17 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 ## Run Locally
 
 - Clone the project
-
+- Setup MySQL Databse by Ecom.sql
 - Install Packages
-
 ```bash
   pip install pymysql
   pip install tkinter
   pip install customtkinter==4.6.3
 ```
-
 - Deployment
-
 To deploy this project run
 
 ```bash
   python App.py
 ```
-
-Setup MySQL Databse by Ecom.sql
 
