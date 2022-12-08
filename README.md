@@ -19,4 +19,13 @@ Install Packages
   pip install customtkinter==4.6.3
 ```
 
+## Deployment
+
+To deploy this project run
+
+```bash
+  python App.py
+```
+
 Setup MySQL Databse by Ecom.sql
+
