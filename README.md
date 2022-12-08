@@ -21,6 +21,7 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
   pip install customtkinter==4.6.3
 ```
 
+
 - Deployment
 
 To deploy this project run
