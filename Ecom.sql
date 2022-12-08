@@ -575,25 +575,25 @@ CREATE PROCEDURE ADDVALUE (
 )
 BEGIN
 	IF tablename = 'USER' THEN 
-	INSERT INTO USER VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d'), att5, att6, att7);
+	INSERT INTO USER VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d %H:%i:%s"'), att5, att6, att7);
     ELSEIF tablename = 'SELLER' THEN INSERT INTO SELLER VALUES (att1, att2, att3, att4, att5, att6);
     ELSEIF tablename = 'PERSONAL_ACCOUNT' THEN INSERT INTO PERSONAL_ACCOUNT VALUES (att1, att2);
     ELSEIF tablename = 'BUSINESS_ACCOUNT' THEN INSERT INTO BUSINESS_ACCOUNT VALUES (att1, att2);
     ELSEIF tablename = 'BRAND_ACCOUNT' THEN INSERT INTO BRAND_ACCOUNT VALUES (att1, att2, att3);
     ELSEIF tablename = 'BUYER' THEN INSERT INTO BUYER VALUES (att1, att2, att3);
     ELSEIF tablename = 'FAVORITE_STORE' THEN INSERT INTO FAVORITE_STORE VALUES (att1, att2);
-    ELSEIF tablename = 'CREDIT' THEN INSERT INTO CREDIT VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d'), att5);
+    ELSEIF tablename = 'CREDIT' THEN INSERT INTO CREDIT VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d %H:%i:%s'), att5);
     ELSEIF tablename = 'PRODUCT' THEN INSERT INTO PRODUCT VALUES (att1, att2, att3, att4, att5, att6, att7);
-    ELSEIF tablename = 'SHOP_ORDER' THEN INSERT INTO SHOP_ORDER VALUES (att1, str_to_date(att2, '%Y-%m-%d'), att3, att4, att5, att6, att7);
+    ELSEIF tablename = 'SHOP_ORDER' THEN INSERT INTO SHOP_ORDER VALUES (att1, str_to_date(att2, '%Y-%m-%d %H:%i:%s'), att3, att4, att5, att6, att7);
     ELSEIF tablename = 'PRODUCT_ORDER' THEN INSERT INTO PRODUCT_ORDER VALUES (att1, att2, att3);
-    ELSEIF tablename = 'COUPON' THEN INSERT INTO COUPON VALUES (att1, att2, str_to_date(att3, '%Y-%m-%d'));
+    ELSEIF tablename = 'COUPON' THEN INSERT INTO COUPON VALUES (att1, att2, str_to_date(att3, '%Y-%m-%d %H:%i:%s'));
     ELSEIF tablename = 'BUYER_COUPON' THEN INSERT INTO BUYER_COUPON VALUES (att1, att2);
     ELSEIF tablename = 'PRODUCT_COUPON' THEN INSERT INTO PRODUCT_COUPON VALUES (att1, att2);
     ELSEIF tablename = 'ORDER_COUPON' THEN INSERT INTO ORDER_COUPON VALUES (att1, att2);
     ELSEIF tablename = 'SHIPPER' THEN INSERT INTO SHIPPER VALUES (att1, att2, att3);
     ELSEIF tablename = 'VEHICLE' THEN INSERT INTO VEHICLE VALUES (att1, att2);
     ELSEIF tablename = 'SHIPPER_VEHICLE' THEN INSERT INTO SHIPPER_VEHICLE VALUES (att1, att2, att3, att4);
-    ELSEIF tablename = 'SHIPPER_ORDER' THEN INSERT INTO SHIPPER_ORDER VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d'), str_to_date(att5, '%Y-%m-%d'));
+    ELSEIF tablename = 'SHIPPER_ORDER' THEN INSERT INTO SHIPPER_ORDER VALUES (att1, att2, att3, str_to_date(att4, '%Y-%m-%d %H:%i:%s'), str_to_date(att5, '%Y-%m-%d %H:%i:%s'));
     ELSEIF tablename = 'ROUTE' THEN INSERT INTO ROUTE VALUES (att1, att2, att3, att4);
     END IF;
 END $
@@ -679,7 +679,7 @@ BEGIN
 		USER.ID = att1, 
         USER.Name = att2, 
         USER.Sex = att3, 
-        USER.Birthdate = str_to_date(att4, '%Y-%m-%d'), 
+        USER.Birthdate = str_to_date(att4, '%Y-%m-%d %H:%i:%s'), 
         USER.Phone = att5, 
         USER.Email = att6, 
         USER.Address = att7
@@ -718,7 +718,7 @@ BEGIN
 		CREDIT.ID = att1, 
         CREDIT.Number = att2, 
         CREDIT.Bank = att3, 
-        CREDIT.ExpDate = str_to_date(att4, '%Y-%m-%d'), 
+        CREDIT.ExpDate = str_to_date(att4, '%Y-%m-%d %H:%i:%s'), 
         CREDIT.UserID = att5
 			WHERE att1 = CREDIT.ID;
     ELSEIF tablename = 'PRODUCT' THEN UPDATE PRODUCT SET
@@ -732,7 +732,7 @@ BEGIN
 			WHERE att1 = PRODUCT.ID;
     ELSEIF tablename = 'SHOP_ORDER' THEN UPDATE SHOP_ORDER SET
 		SHOP_ORDER.ID = att1, 
-        SHOP_ORDER.Date = str_to_date(att2, '%Y-%m-%d'), 
+        SHOP_ORDER.Date = str_to_date(att2, '%Y-%m-%d %H:%i:%s'), 
         SHOP_ORDER.PaymentMethod = att3, 
         SHOP_ORDER.SellerID = att4, 
         SHOP_ORDER.BuyerID = att5, 
@@ -747,7 +747,7 @@ BEGIN
     ELSEIF tablename = 'COUPON' THEN UPDATE COUPON SET
 		COUPON.ID = att1, 
         COUPON.Code = att2,
-        COUPON.ExpDate = str_to_date(att3, '%Y-%m-%d')
+        COUPON.ExpDate = str_to_date(att3, '%Y-%m-%d %H:%i:%s')
 			WHERE att1 = COUPON.ID;
     ELSEIF tablename = 'BUYER_COUPON' THEN UPDATE BUYER_COUPON SET
 		BUYER_COUPON.CouponID = att1,
@@ -780,8 +780,8 @@ BEGIN
 		SHIPPER_ORDER.ShipperID = att1,
         SHIPPER_ORDER.OrderID = att2,
 		SHIPPER_ORDER.Address = att3,
-        SHIPPER_ORDER.StartingDate = str_to_date(att4, '%Y-%m-%d'),
-        SHIPPER_ORDER.EstimatedArrivalDate = str_to_date(att5, '%Y-%m-%d')
+        SHIPPER_ORDER.StartingDate = str_to_date(att4, '%Y-%m-%d %H:%i:%s'),
+        SHIPPER_ORDER.EstimatedArrivalDate = str_to_date(att5, '%Y-%m-%d %H:%i:%s')
 			WHERE att1 = SHIPPER_ORDER.ShipperID AND att2 = SHIPPER_ORDER.OrderID;
     ELSEIF tablename = 'ROUTE' THEN UPDATE ROUTE SET
 		ROUTE.ShipperID = att1,
@@ -794,7 +794,7 @@ END $
 DELIMITER ;
 
 -- CALL READTABLE('USER');
--- CALL ADDVALUE('SHOP_ORDER', '000100', '2022-10-10', 'Car', '000000', '000001', '1000', '1000');
+-- CALL ADDVALUE('SHOP_ORDER','000067', '2022-01-23', 'Cash', '000002', '000001', '1000', '1000');
 -- CALL DELETEVALUE('SHOP_ORDER', '000100', '', '');
 -- CALL SEARCHVALUE('VEHICLE', '000003', '', '');
 -- CALL UPDATEVALUE('VEHICLE', '000003', 'Truck', '', '', '', '', '');

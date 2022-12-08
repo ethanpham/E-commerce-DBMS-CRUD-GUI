@@ -11,7 +11,10 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 
 - Clone the project
 
-- Setup MySQL Databse by Ecom.sql
+- Setup MySQL Databse by Ecom.sql then run
+```bash
+  USE ecom
+```
 
 - Install Packages
 
@@ -28,3 +31,12 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
   python App.py
 ```
 
+## Use App
+
+Enter the app with one of these three usernames: admin, seller, buyer and password: 123
+
+- Admin: Can view all tables.
+
+- Seller: Can view all tables related to them, orders, and shippers.
+
+- Buyer: Can view all tables related to them and orders.

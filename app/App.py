@@ -228,8 +228,8 @@ class App(customtkinter.CTk):
                 cursor.callproc('ADDVALUE', (child.TABLE, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7,))
                 dbConnection.commit()
                 dbConnection.close()
-            except:
-                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
+            except Exception as e:
+                messagebox.showinfo(f"Error!", {e})
                 return
 
         self.refreshTable(child)
@@ -251,8 +251,8 @@ class App(customtkinter.CTk):
                     cursor.callproc('DELETEVALUE', (child.TABLE, deleteData, "", "",))
                     dbConnection.commit()
                     dbConnection.close()
-                except:
-                    messagebox.showinfo("Error!", "Sorry an error occurred!")
+                except Exception as e:
+                    messagebox.showinfo(f"Error!", {e})
                     return
 
                 self.refreshTable(child)
@@ -305,8 +305,8 @@ class App(customtkinter.CTk):
                 cursor.callproc('UPDATEVALUE', (child.TABLE, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, attribute7,))
                 dbConnection.commit()
                 dbConnection.close()
-            except:
-                messagebox.showinfo("Error!", "Value in one of the fields already exists, is in wrong format or can not be fixed.")
+            except Exception as e:
+                messagebox.showinfo(f"Error!", {e})
                 return
 
         self.refreshTable(child)
