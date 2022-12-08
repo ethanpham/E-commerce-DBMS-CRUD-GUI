@@ -22,9 +22,7 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 ```
 
 
-- Deployment
-
-To deploy this project run
+- To deploy this project run
 
 ```bash
   python App.py
