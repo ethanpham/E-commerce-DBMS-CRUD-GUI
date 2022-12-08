@@ -11,7 +11,7 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 
 Clone the project
 
-Install Packages
+- Install Packages
 
 ```bash
   pip install pymysql
@@ -19,7 +19,7 @@ Install Packages
   pip install customtkinter==4.6.3
 ```
 
-## Deployment
+- Deployment
 
 To deploy this project run
 
