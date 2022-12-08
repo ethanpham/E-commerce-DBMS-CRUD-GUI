@@ -170,7 +170,7 @@ class UserList(customtkinter.CTkFrame):
     def read(self):
         dbConnection = self.connection()
         cursor = dbConnection.cursor()
-        cursor.execute("SELECT * FROM " + self.TABLE)
+        cursor.callproc('READTABLE', (self.TABLE,))
         results = cursor.fetchall()
         dbConnection.commit()
         dbConnection.close()

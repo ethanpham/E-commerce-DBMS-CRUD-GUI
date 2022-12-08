@@ -44,6 +44,6 @@ class Landing(customtkinter.CTkFrame):
         self.exitButton.grid(row=4, column=0, columnspan=10, padx=200, pady=(0,10))
         
     def logout(self):
-        self.controller.logedIn = False
+        self.controller.loggedIn = "logout"
         return self.controller.showFrame("Login")
         

@@ -36,7 +36,7 @@ class App(customtkinter.CTk):
         entityMenu = Menu(self)
         self.config(menu=entityMenu)
         
-        self.logedIn = False
+        self.loggedIn = "logout"
         
         # User Menu
         userMenu = Menu(entityMenu)
@@ -95,6 +95,9 @@ class App(customtkinter.CTk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
+        self.buyerFrames = {}
+        self.sellerFrames ={}
+
         for tableFrame in (Login,
                            Landing, 
                            UserList, CreditInformation,
@@ -105,6 +108,27 @@ class App(customtkinter.CTk):
                            ShipperList, VehicleList,
                            VehicleAssignedForShipper, OrderAssignedForShipper, Route
                            ):
+
+            if tableFrame in (Login,
+                            Landing, 
+                            BuyerList, BuyerFavoriteStore, CouponOwnByBuyer,
+                            OrderList, ProductBoughtInOrder, CouponAppliedInOrder):
+                page_name = tableFrame.__name__
+                frame = tableFrame(parent=container, controller=self)
+                self.buyerFrames[page_name] = frame
+                frame.grid(row=0, column=0, sticky="nsew")
+            if tableFrame in (Login,
+                            Landing, 
+                            SellerList, PersonalAccount, BusinessAccount, BrandAccount,
+                            ProductList, CouponList, CouponForProduct,
+                            OrderList, ProductBoughtInOrder, CouponAppliedInOrder,
+                            ShipperList, VehicleList,
+                            VehicleAssignedForShipper, OrderAssignedForShipper, Route):
+                page_name = tableFrame.__name__
+                frame = tableFrame(parent=container, controller=self)
+                self.sellerFrames[page_name] = frame
+                frame.grid(row=0, column=0, sticky="nsew")
+
             page_name = tableFrame.__name__
             frame = tableFrame(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -116,9 +140,22 @@ class App(customtkinter.CTk):
         self.pressLabel = customtkinter.CTkLabel(self, text="Switch to this Page").pack()
 
     def showFrame(self, page_name):
-        if self.logedIn or page_name == "Login":
-            frame = self.frames[page_name]
-            frame.tkraise()
+        if self.loggedIn != "logout" or page_name == "Login":
+            if page_name == "Login":
+                frame = self.frames[page_name]
+                frame.tkraise()
+            elif self.loggedIn == "admin":
+                frame = self.frames[page_name]
+                frame.tkraise()
+            elif self.loggedIn == "buyer" and page_name in self.buyerFrames:
+                frame = self.buyerFrames[page_name]
+                frame.tkraise()
+            elif self.loggedIn == "seller" and page_name in self.sellerFrames: 
+                frame = self.sellerFrames[page_name]
+                frame.tkraise() 
+            else:
+                messagebox.showinfo("Error!", "You do not have the privilege to access other tables!")
+                return
         else:
             messagebox.showinfo("Error!", "You have to log in first!")
             return

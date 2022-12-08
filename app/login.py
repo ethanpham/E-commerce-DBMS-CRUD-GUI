@@ -50,7 +50,13 @@ class Login(customtkinter.CTkFrame):
         self.username = str(self.entry1.get())
         self.password = str(self.entry2.get())
         if self.username == "admin" and self.password == "123":
-            self.controller.logedIn = True
+            self.controller.loggedIn = "admin"
+            return self.controller.showFrame("Landing")
+        elif self.username == "buyer" and self.password == "123":
+            self.controller.loggedIn = "buyer"
+            return self.controller.showFrame("Landing")
+        elif self.username == "seller" and self.password == "123":
+            self.controller.loggedIn = "seller"
             return self.controller.showFrame("Landing")
         else:
             messagebox.showinfo("Error!", "Username not exists or the password is wrong!")
