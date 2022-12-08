@@ -11,10 +11,12 @@ A simple CRUD to perform basic database SQL on a conceptual database of an E-com
 
 Clone the project
 
-Install PyMySQL
+Install Packages
 
 ```bash
-  pip install PyMySQL
+  pip install pymysql
+  pip install tkinter
+  pip install customtkinter==4.6.3
 ```
 
 Setup MySQL Databse by Ecom.sql
