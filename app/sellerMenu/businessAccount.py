@@ -33,23 +33,23 @@ class BusinessAccount(customtkinter.CTkFrame):
         
         self.titleLabel = customtkinter.CTkLabel(self, 
                                                  text = "E-commerce Database Management System CRUD", 
-                                                 text_font=('Segoe Ui Bold', 24),
+                                                 font=('Segoe Ui Bold', 24),
                                                  text_color="#E5E5E5")
         self.titleLabel.grid(row=0, column=0, columnspan=10, padx=150, pady=(20,10))
 
         self.headingLabel = customtkinter.CTkLabel(self, 
                                                    text = "BUSINESS_ACCOUNT TABLE", 
-                                                   text_font=('Segoe Ui Bold', 18),
+                                                   font=('Segoe Ui Bold', 18),
                                                    text_color="#E5E5E5")
         self.headingLabel.grid(row=1, column=0, columnspan=10, padx=90, pady=(0,25))
         
-        self.label1 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE1, text_font=('Segoe Ui', 12))
-        self.label2 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE2, text_font=('Segoe Ui', 12))
-        self.label3 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE3, text_font=('Segoe Ui', 12))
-        self.label4 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE4, text_font=('Segoe Ui', 12))
-        self.label5 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE5, text_font=('Segoe Ui', 12))
-        self.label6 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE6, text_font=('Segoe Ui', 12))
-        self.label7 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE7, text_font=('Segoe Ui', 12))
+        self.label1 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE1, font=('Segoe Ui', 14))
+        self.label2 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE2, font=('Segoe Ui', 14))
+        self.label3 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE3, font=('Segoe Ui', 14))
+        self.label4 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE4, font=('Segoe Ui', 14))
+        self.label5 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE5, font=('Segoe Ui', 14))
+        self.label6 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE6, font=('Segoe Ui', 14))
+        self.label7 = customtkinter.CTkLabel(self, text = self.ATTRIBUTE7, font=('Segoe Ui', 14))
 
         self.label1.grid(row=3, column=0, padx=(40,5), pady=5)
         self.label2.grid(row=4, column=0, padx=(40,5), pady=5)
@@ -59,13 +59,13 @@ class BusinessAccount(customtkinter.CTkFrame):
         self.label6.grid(row=8, column=0, padx=(40,5), pady=5)
         self.label7.grid(row=9, column=0, padx=(40,5), pady=5)
 
-        self.entry1 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder1)
-        self.entry2 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder2)
-        self.entry3 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder3, fg_color="#737373")
-        self.entry4 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder4, fg_color="#737373")
-        self.entry5 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder5, fg_color="#737373")
-        self.entry6 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder6, fg_color="#737373")
-        self.entry7 = customtkinter.CTkEntry(self, width=600, text_font=('Segoe Ui', 10), textvariable = self.placeHolder7, fg_color="#737373")
+        self.entry1 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder1)
+        self.entry2 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder2)
+        self.entry3 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder3, fg_color="#737373")
+        self.entry4 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder4, fg_color="#737373")
+        self.entry5 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder5, fg_color="#737373")
+        self.entry6 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder6, fg_color="#737373")
+        self.entry7 = customtkinter.CTkEntry(self, width=600, font=('Segoe Ui', 14), textvariable = self.placeHolder7, fg_color="#737373")
 
         #, fg_color="#737373"
         
@@ -83,14 +83,14 @@ class BusinessAccount(customtkinter.CTkFrame):
         self.entry6.configure(state= "disabled")
         self.entry7.configure(state= "disabled")
 
-        self.addButton = customtkinter.CTkButton(self, text = "Add", text_font=('Segoe Ui', 11), command = lambda: controller.add(self))
-        self.updateButton = customtkinter.CTkButton(self, text = "Update", text_font=('Segoe Ui', 11), command = lambda: controller.update(self))
-        self.deleteButton = customtkinter.CTkButton(self, text = "Delete", text_font=('Segoe Ui', 11), command = lambda: controller.delete(self))
-        self.searchButton = customtkinter.CTkButton(self, text = "Search", text_font=('Segoe Ui', 11), command = lambda: controller.search(self))
-        self.selectButton = customtkinter.CTkButton(self, text = "Select", text_font=('Segoe Ui', 11), command = self.select)
+        self.addButton = customtkinter.CTkButton(self, text = "Add", font=('Segoe Ui', 14), command = lambda: controller.add(self))
+        self.updateButton = customtkinter.CTkButton(self, text = "Update", font=('Segoe Ui', 14), command = lambda: controller.update(self))
+        self.deleteButton = customtkinter.CTkButton(self, text = "Delete", font=('Segoe Ui', 14), command = lambda: controller.delete(self))
+        self.searchButton = customtkinter.CTkButton(self, text = "Search", font=('Segoe Ui', 14), command = lambda: controller.search(self))
+        self.selectButton = customtkinter.CTkButton(self, text = "Select", font=('Segoe Ui', 14), command = self.select)
         self.backToLandingButton = customtkinter.CTkButton(self, 
                                                         text = "Back To Landing", 
-                                                        text_font=('Segoe Ui', 11),
+                                                        font=('Segoe Ui', 14),
                                                         fg_color="#1A5C41",
                                                         command=lambda: controller.showFrame("Landing"))
 

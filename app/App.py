@@ -166,7 +166,7 @@ class App(customtkinter.CTk):
         dbConnection = pymysql.connect(
             host = 'localhost',
             user = 'root', 
-            password = '',
+            password = '190802',
             db = 'ecom',
         )
         return dbConnection
